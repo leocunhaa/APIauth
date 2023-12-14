@@ -11,11 +11,14 @@ io.on('connection', (socket) => {
   console.log('Usuário conectado');
 
   // Lógica para lidar com mensagens do servidor
-  socket.on('chat', (data) => {
+socket.on('chat', (data) => {
+  if (data && data.user && data.message) {
     const { user, message } = data;
     console.log(`Mensagem do cliente: ${user}: ${message}`);
     io.emit('chat', { user, message });  // Envia a mensagem para todos os clientes conectados
-  });
+  }
+});
+
 
   // Lógica para desconectar o usuário
   socket.on('disconnect', () => {
@@ -42,3 +45,4 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Servidor está sendo executado na porta ${PORT}`);
 });
+
